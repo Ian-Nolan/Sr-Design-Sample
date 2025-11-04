@@ -1,0 +1,83 @@
+<!--
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flask Button and Slider Example</title>
+</head>
+<body>
+    <h1>Web Interface</h1>
+
+    
+    <p>Current count: {{ count }}</p>
+    <form method="POST" action="{{ url_for('increment') }}">
+        <button type="submit">Click Me!</button>
+    </form>
+
+    <hr>
+
+    
+    <p>Current volume: {{ volume }}</p>
+    <form method="POST" action="{{ url_for('set_volume') }}">
+        <input type="range" name="volume" min="0" max="100" value="{{ volume }}">
+        <input type="submit" value="Set Volume">
+    </form>
+</body>
+</html>
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DJ Booth</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #121212;
+            color: white;
+        }
+        .slider {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="container py-4">
+    <h1 class="mb-4">🎧 Team Three's DJ Control Panel</h1>
+
+    <div class="mb-3">
+        <p>Current Count: <strong>{{ count }}</strong></p>
+        <form method="POST" action="{{ url_for('increment') }}">
+            <button type="submit" class="btn btn-primary">Plus 1!</button>
+        </form>
+        <p> </p>
+        <form method="POST" action="{{ url_for('decrement') }}">
+            <button type="submit" class="btn btn-primary">Minus 1!</button>
+        </form>
+    </div>
+
+    <div class="mb-4">
+        <p>Master Volume: {{ volume }}</p>
+        <form method="POST" action="{{ url_for('set_volume') }}">
+            <input type="range" class="form-range slider" name="volume" min="0" max="100" value="{{ volume }}">
+            <button class="btn btn-secondary mt-2" type="submit">Set Volume</button>
+        </form>
+    </div>
+
+    <hr class="border-light">
+
+    <div class="row">
+        <div class="col-md-4">
+            <p>Deck A Volume</p>
+            <input type="range" class="form-range slider" min="0" max="100" value="50">
+        </div>
+        <div class="col-md-4">
+            <p>Deck B Volume</p>
+            <input type="range" class="form-range slider" min="0" max="100" value="50">
+        </div>
+        <div class="col-md-4">
+            <p>Crossfader</p>
+            <input type="range" class="form-range slider" min="0" max="100" value="50">
+        </div>
+    </div>
+</body>
+</html>

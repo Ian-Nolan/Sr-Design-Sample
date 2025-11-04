@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DJ Booth</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #121212;
+            color: white;
+        }
+        input[type=range].slider {
+            width: 100%;
+            height: 5rem;
+        }
+        input[type=range].slider::-webkit-slider-thumb {
+            width: 30px;
+            height: 30px;
+            background: #ffffff;
+            border: 2px solid #000;
+            border-radius: 50%;
+            cursor: pointer;
+            margin-top: -13px;      /* Centers the thumb vertically */
+        }
+
+        /* Custom styles to make the first two buttons larger */
+        .btn-large {
+            font-size: 2rem;  /* Larger font */
+            padding: 20px 40px;  /* Larger padding for more space inside */
+            width: 100%;  /* Make buttons stretch to the full width of their container */
+        }
+    </style>
+</head>
+<body class="container py-4">
+    <h1 class="mb-4">Press a button to watch things happen in the RPi terminal</h1>
+
+    <div class="mb-3">
+        <p>Current Pitch: <strong>{{ count }}</strong></p>
+        <form method="POST" action="{{ url_for('increment') }}">
+            <button type="submit" class="btn btn-primary btn-large">+1 to counter</button>
+        </form>
+        <p> </p>
+        <form method="POST" action="{{ url_for('decrement') }}">
+            <button type="submit" class="btn btn-primary btn-large">-1 to counter</button>
+        </form>
+    </div>
+
+    <hr class="border-light">
+
+    <div class="mb-4">
+        <p>Pitch: <span id="pitchValue">{{ pitch }}</span></p>
+        <input type="range" class="form-range slider" name="pitch" min="-8" max="8" value="{{ pitch }}" 
+        id="pitchSlider"
+        oninput="updatePitch(this.value)">
+        
+    </div>
+
+    <div class="mb-5">
+        <p>Master Volume: <span id="volumeValue">{{ volume }}</span></p>
+        <input type="range" class="form-range slider" name="volume" min="0" max="100" value="{{ volume }}" 
+        id="volumeSlider"
+        oninput="updateVolume(this.value)">
+        
+    </div>
+
+    <div class = "mb-5">
+        <form method="POST" action="{{ url_for('toggle_crush') }}">
+            <button class="btn btn-danger btn-large" type="submit">Toggle Crush</button>
+        </form>
+    </div>
+
+    <script>
+        function updateVolume(val) {
+            document.getElementById("volumeValue").innerText = val;
+        
+            fetch("/set_volume", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: volume=${val}
+            });
+        }
+        </script>
+
+    <script>
+        function updatePitch(val) {
+            document.getElementById("pitchValue").innerText = val;
+        
+            fetch("/set_pitch", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: pitch=${val}
+            });
+        }
+        </script>
+        
+</body>
+</html>
